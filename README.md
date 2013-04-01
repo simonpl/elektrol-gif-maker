@@ -27,29 +27,29 @@ Building
 
 At this time, to build elektrol-gif-maker run the following command from the current directory:
 
-'gcc -o elektrol-gif-maker elektrol-gif-maker.c -lcurl'
+`gcc -o elektrol-gif-maker elektrol-gif-maker.c -lcurl`
 
 The availableness of libcurl is required. For generating the GIF-Images you also need convert from ImageMagick installed. The path where it's located also has to be in your PATH. A configure script and a Makefile will be provided later.
 
 Usage
 -----
 
-'./elektrol-gif-maker --server/-s <server> --user/-u <username> --password/-p <password> --delay/-d <delay> --outputdir/-o <outputdir> [--channels/-c <channels>]'
+`./elektrol-gif-maker --server/-s <server> --user/-u <username> --password/-p <password> --delay/-d <delay> --outputdir/-o <outputdir> [--channels/-c <channels>]`
 
---server/-s <server> defines the server where the data is located.
+`--server/-s <server>` defines the server where the data is located.
 
---user/-u <username> defines the username that is used to log in via FTP.
+`--user/-u <username>` defines the username that is used to log in via FTP.
 
---password/-p <password> defines the password that is used to log in via FTP.
+`--password/-p <password>` defines the password that is used to log in via FTP.
 
---delay/-d <delay> defines the delay that is used between the images in the GIF-Animation.
+`--delay/-d <delay>` defines the delay that is used between the images in the GIF-Animation.
 
---outputdir/-o <outputdir> defines where the data will be saved.
+`--outputdir/-o <outputdir>` defines where the data will be saved.
 
---channels/-c <channels> defines animations for which channels should be produced. Possible Channels are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 and RGB. If it's not defined, all Channels will be animated.
+`--channels/-c <channels>` defines animations for which channels should be produced. Possible Channels are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 and RGB. If it's not defined, all Channels will be animated.
 
 Example:
 
-'./elektrol-gif-maker --server ftp.ntsomz.ru --user electro --password electro --delay 0.1 --outputdir . --channels 1 3 5 9 RGB'
+`./elektrol-gif-maker --server ftp.ntsomz.ru --user electro --password electro --delay 0.1 --outputdir . --channels 1 3 5 9 RGB`
 
 An option to define the date will be added later.
