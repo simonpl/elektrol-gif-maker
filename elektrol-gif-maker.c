@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     int i,j,pid, wpid, status, success;
     char temp[32]; /* Used at puzzling the path */
     success = 1; /* Globally recognize if there is an error */
-    char *poschannels[]= {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "RGB"}; /* This channels may be using */
+    char *poschannels[]= {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "RGB"}; /* This channels may be used */
     char *channels[]= {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "RGB", NULL};
     struct elektrol_config config = {};
     printf("Elektro-L Gif-maker Copyright (C) 2013 Simon Plasger\nThis program comes with ABSOLUTELY NO WARRANTY\nThis is free software, and you are welcome to redistribute it under certain conditions; view 'LICENSE' for details.\n\n");
