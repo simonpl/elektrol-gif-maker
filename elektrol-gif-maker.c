@@ -121,7 +121,6 @@ int main(int argc, char *argv[])
             }
         }
     }
-    printf("Jahr: %i, Monat: %i, Tag: %i\n", config.time.tm_year, config.time.tm_mon, config.time.tm_mday);
     if(config.server == 0)
     {
         fprintf(stderr, "No server to download the data from has been defined. Pass an argument \"--server <server>\" to the program.\n");
