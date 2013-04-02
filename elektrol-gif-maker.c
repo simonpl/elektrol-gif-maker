@@ -53,6 +53,7 @@ int main(int argc, char *argv[])
                 i++;
                 j++;
             }
+            i--;
             channels[j] = NULL;
         }
         else if(strcmp(argv[i],"--server") == 0 || strcmp(argv[i],"-s") == 0)
@@ -95,7 +96,32 @@ int main(int argc, char *argv[])
                 config.outputdir = argv[i];
             }
         }
+        else if(strcmp(argv[i],"--year") == 0 || strcmp(argv[i],"-y") == 0)
+        {
+            i++;
+            if(argv[i] != NULL);
+            {
+                config.time.tm_year = atoi(argv[i]) - 1900;
+            }
+        }
+        else if(strcmp(argv[i],"--month") == 0 || strcmp(argv[i],"-m") == 0)
+        {
+            i++;
+            if(argv[i] != NULL);
+            {
+                config.time.tm_mon = atoi(argv[i]);
+            }
+        }
+        else if(strcmp(argv[i],"--day") == 0)
+        {
+            i++;
+            if(argv[i] != NULL);
+            {
+                config.time.tm_mday = atoi(argv[i]);
+            }
+        }
     }
+    printf("Jahr: %i, Monat: %i, Tag: %i\n", config.time.tm_year, config.time.tm_mon, config.time.tm_mday);
     if(config.server == 0)
     {
         fprintf(stderr, "No server to download the data from has been defined. Pass an argument \"--server <server>\" to the program.\n");
@@ -121,8 +147,9 @@ int main(int argc, char *argv[])
         fprintf(stderr, "No directory to save the images has been defined. Pass an argument \"--outputdir <directory>\" to the program.\n");
         exit(EXIT_FAILURE);
     }
-    if(config.time.tm_year == 0 || config.time.tm_mon == 0 || config.time.tm_mday == 0);
+    if(config.time.tm_year == 0 || config.time.tm_mon == 0 || config.time.tm_mday == 0)
     {
+        printf("Using date of yesterday for loading images\n");
         time_t unixtime;
         struct tm *timestr;
         unixtime = time(NULL) - 86400;
@@ -189,6 +216,10 @@ int main(int argc, char *argv[])
                     strcat(path, "/December/");
                     break;
             }
+            if(config.time.tm_mday < 10)
+            {
+                strcat(path, "0");
+            }
             sprintf(temp, "%i", config.time.tm_mday);
             strcat(path, temp);
             strcat(path, "/");
@@ -196,12 +227,16 @@ int main(int argc, char *argv[])
             strcat(path, "/");
             sprintf(temp, "%i", config.time.tm_year - 100);
             strcat(path, temp);
-            if(config.time.tm_mon + 1 < 10)
+            if(config.time.tm_mon < 9)
             {
                 strcat(path, "0");
             }
-            sprintf(temp, "%i", config.time.tm_mon + 1);
+            sprintf(temp, "%i", config.time.tm_mon + 1);;
             strcat(path, temp);
+            if(config.time.tm_mday < 10)
+            {
+                strcat(path, "0");
+            }
             sprintf(temp, "%i", config.time.tm_mday);
             strcat(path, temp);
             strcat(path, "_");

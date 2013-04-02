@@ -34,7 +34,7 @@ The availableness of libcurl is required. For generating the GIF-Images you also
 Usage
 -----
 
-`./elektrol-gif-maker --server/-s <server> --user/-u <username> --password/-p <password> --delay/-d <delay> --outputdir/-o <outputdir> [--channels/-c <channels>]`
+`./elektrol-gif-maker --server/-s <server> --user/-u <username> --password/-p <password> --delay/-d <delay> --outputdir/-o <outputdir> [--channels/-c <channels>] [--year/-y <year>] [--month/-m <month>] [--day <day>]`
 
 `--server/-s <server>` defines the server where the data is located.
 
@@ -48,8 +48,8 @@ Usage
 
 `--channels/-c <channels>` defines animations for which channels should be produced. Possible Channels are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 and RGB. If it's not defined, all Channels will be animated.
 
+`--year/-y <year>`, `--month/-m <month>` and `--day <day>` the date whose images should be used. If not all three are defined, the date of yesterday will be used.
+
 Example:
 
-`./elektrol-gif-maker --server ftp.ntsomz.ru --user electro --password electro --delay 0.1 --outputdir . --channels 1 3 5 9 RGB`
-
-An option to define the date will be added later.
+`./elektrol-gif-maker --server ftp.ntsomz.ru --user electro --password electro --delay 0.1 --outputdir . --channels 1 2 5 RGB --year 2012 --month 5 --day 23`
