@@ -173,7 +173,9 @@ int main(int argc, char *argv[])
         for(j = 0; j < sizeof(timedirs)/sizeof(timedirs[0]); j++)
         {
             path[0] = '\0';
-            strcat(path, "ftp://ftp.ntsomz.ru/");
+            strcat(path, "ftp://");
+            strcat(path, config.server);
+            strcat(path, "/");
             sprintf(temp, "%i", config.time.tm_year + 1900);
             strcat(path, temp);
             switch(config.time.tm_mon)
