@@ -48,7 +48,7 @@ Usage
 
 `--channels/-c <channels>` defines animations for which channels should be produced. Possible Channels are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 and RGB. If it's not defined, all Channels will be animated.
 
-`--year/-y <year>`, `--month/-m <month>` and `--day <day>` the date whose images should be used. If not all three are defined, the date of yesterday will be used.
+`--year/-y <year>`, `--month/-m <month>` and `--day <day>` define the date whose images should be used. Year is a number like 2013, month is a number between 0 and 11 (0 is January, 11 is December) and day is the day of the month (1-31). If not all three are defined, the date of yesterday will be used.
 
 Example:
 
