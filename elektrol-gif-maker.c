@@ -124,27 +124,27 @@ int main(int argc, char *argv[])
     if(config.server == 0)
     {
         fprintf(stderr, "No server to download the data from has been defined. Pass an argument \"--server <server>\" to the program.\n");
-        exit(EXIT_FAILURE);
+        exit(2);
     }
     if(config.user == 0)
     {
         fprintf(stderr, "No username for the FTP-server has been defined. Pass an argument \"--user <username>\" to the program.\n");
-        exit(EXIT_FAILURE);
+        exit(3);
     }
     if(config.passwd == 0)
     {
         fprintf(stderr, "No password for the FTP-server has been defined. Pass an argument \"--password <password>\" to the program.\n");
-        exit(EXIT_FAILURE);
+        exit(4);
     }
     if(config.delay == 0)
     {
         fprintf(stderr, "No Delay time for the GIF-animation has been defined. Pass an argument \"--delay <delay>\" to the program, where <delay> is a number like 0.1 or 0.2.\n");
-        exit(EXIT_FAILURE);
+        exit(5);
     }
     if(config.outputdir == 0)
     {
         fprintf(stderr, "No directory to save the images has been defined. Pass an argument \"--outputdir <directory>\" to the program.\n");
-        exit(EXIT_FAILURE);
+        exit(6);
     }
     if(config.time.tm_year == 0 || config.time.tm_mon == 0 || config.time.tm_mday == 0)
     {
@@ -287,5 +287,5 @@ int main(int argc, char *argv[])
     if(success == 1)
         exit(EXIT_SUCCESS);
     else
-        exit(EXIT_FAILURE);
+        exit(1);
 }
