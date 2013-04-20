@@ -31,12 +31,13 @@
 
 #include "structs.h"
 #include "functions.c"
+#include "constants.h"
 
 int main(int argc, char *argv[])
 {
     int i,j,pid, wpid, status, success;
     char temp[32]; /* Used at puzzling the path */
-    success = 1; /* Globally recognize if there is an error */
+    success = EXIT_SUCCESS; /* Globally recognize if there is an error */
     char *poschannels[]= {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "RGB"}; /* This channels may be used */
     char *channels[]= {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "RGB", NULL};
     struct elektrol_config config = {};
@@ -124,27 +125,27 @@ int main(int argc, char *argv[])
     if(config.server == 0)
     {
         fprintf(stderr, "No server to download the data from has been defined. Pass an argument \"--server <server>\" to the program.\n");
-        exit(2);
+        exit(ELEKTROL_NO_SERVER_ERROR);
     }
     if(config.user == 0)
     {
         fprintf(stderr, "No username for the FTP-server has been defined. Pass an argument \"--user <username>\" to the program.\n");
-        exit(3);
+        exit(ELEKTROL_NO_USERNAME_ERROR);
     }
     if(config.passwd == 0)
     {
         fprintf(stderr, "No password for the FTP-server has been defined. Pass an argument \"--password <password>\" to the program.\n");
-        exit(4);
+        exit(ELEKTROL_NO_PASSWORD_ERROR);
     }
     if(config.delay == 0)
     {
         fprintf(stderr, "No Delay time for the GIF-animation has been defined. Pass an argument \"--delay <delay>\" to the program, where <delay> is a number like 0.1 or 0.2.\n");
-        exit(5);
+        exit(ELEKTROL_NO_DELAY_ERROR);
     }
     if(config.outputdir == 0)
     {
         fprintf(stderr, "No directory to save the images has been defined. Pass an argument \"--outputdir <directory>\" to the program.\n");
-        exit(6);
+        exit(ELEKTROL_NO_DIRECTORY_ERROR);
     }
     if(config.time.tm_year == 0 || config.time.tm_mon == 0 || config.time.tm_mday == 0)
     {
@@ -264,7 +265,7 @@ int main(int argc, char *argv[])
             char *arguments[] = {"convert", "-delay", config.delay, "-loop", "0", "*.jpg", "anim.gif", NULL};
             execvp("convert", arguments);
             fprintf(stderr, "Could not execute the convert command. Make sure convert is in a directory that is in your PATH.");
-            _exit(1);
+            _exit(8);
         }
         if(pid > 0)
         {
@@ -273,7 +274,7 @@ int main(int argc, char *argv[])
         else
         {
             fprintf(stderr, "Generation for GIF of channel %s could not be started, error while forking\n", channels[i]);
-            success = 0;
+            success = ELEKTROL_FORK_ERROR;
         }
     }
     for(i = 0; i < sizeof(channels)/sizeof(channels[0]); i++)
@@ -284,8 +285,10 @@ int main(int argc, char *argv[])
             printf("Child %i exited with state %i\n", wpid, status);
         }
     }
-    if(success == 1)
+    if(success == EXIT_SUCCESS)
         exit(EXIT_SUCCESS);
+    else if(success == ELEKTROL_FORK_ERROR)
+        exit(ELEKTROL_FORK_ERROR);
     else
-        exit(1);
+        exit(ELEKTROL_UNKOWN_ERROR);
 }
