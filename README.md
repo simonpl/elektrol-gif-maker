@@ -53,3 +53,24 @@ Usage
 Example:
 
 `./elektrol-gif-maker --server ftp.ntsomz.ru --user electro --password electro --delay 0.1 --outputdir . --channels 1 2 5 RGB --year 2012 --month 5 --day 23`
+
+Exit states
+-----------
+
+0 - Success
+
+2 - No server defined
+
+3 - No username defined
+
+4 - No password defined
+
+5 - No delay defined
+
+6 - No directory defined
+
+7 - No convert binary found in $PATH
+
+8 - Error while forking
+
+9 - Unkown error

@@ -265,7 +265,7 @@ int main(int argc, char *argv[])
             char *arguments[] = {"convert", "-delay", config.delay, "-loop", "0", "*.jpg", "anim.gif", NULL};
             execvp("convert", arguments);
             fprintf(stderr, "Could not execute the convert command. Make sure convert is in a directory that is in your PATH.");
-            _exit(8);
+            _exit(ELEKTROL_CONVERT_ERROR);
         }
         if(pid > 0) /* Parent process */
         {
