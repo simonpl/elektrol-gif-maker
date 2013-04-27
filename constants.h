@@ -1,3 +1,4 @@
+/*******Constants for Errors*******/
 #define ELEKTROL_NO_SERVER_ERROR 2
 #define ELEKTROL_NO_USERNAME_ERROR 3
 #define ELEKTROL_NO_PASSWORD_ERROR 4

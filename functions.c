@@ -1,4 +1,4 @@
-size_t my_fwrite(void *buffer, size_t size, size_t nmemb, void *stream)
+size_t my_fwrite(void *buffer, size_t size, size_t nmemb, void *stream) /* Used by curl */
 {
   struct curlfile *out=(struct curlfile *)stream;
   if(out && !out->stream) {
@@ -8,7 +8,7 @@ size_t my_fwrite(void *buffer, size_t size, size_t nmemb, void *stream)
   }
   return fwrite(buffer, size, nmemb, out->stream);
 }
-int in_array(char *array[], int size, char *lookfor)
+int in_array(char *array[], int size, char *lookfor) /* Check if array has lookfor als element */
 {
     int i;
     for (i = 0; i < size; i++)
@@ -16,7 +16,7 @@ int in_array(char *array[], int size, char *lookfor)
             return 1;
     return 0;
 }
-int load_image(char *path, char *filename, struct elektrol_config config)
+int load_image(char *path, char *filename, struct elektrol_config config) /* Load the requested image and store it at filename */
 {
     CURL *curl;
     CURLcode result;

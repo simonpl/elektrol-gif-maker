@@ -10,5 +10,5 @@ struct elektrol_config /* Structure where the configuration will be stored */
     char *passwd;
     char *delay;
     char *outputdir;
-    struct tm time; // Structure where time can be stored.
+    struct tm time; /* Structure where time can be stored. */
 };

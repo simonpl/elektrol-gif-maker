@@ -39,12 +39,12 @@ int main(int argc, char *argv[])
     char temp[32]; /* Used at puzzling the path */
     success = EXIT_SUCCESS; /* Globally recognize if there is an error */
     char *poschannels[]= {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "RGB"}; /* This channels may be used */
-    char *channels[]= {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "RGB", NULL};
-    struct elektrol_config config = {};
+    char *channels[]= {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "RGB", NULL}; /* This ones *are* used */
+    struct elektrol_config config = {}; /* Empty config */
     printf("Elektro-L Gif-maker Copyright (C) 2013 Simon Plasger\nThis program comes with ABSOLUTELY NO WARRANTY\nThis is free software, and you are welcome to redistribute it under certain conditions; view 'LICENSE' for details.\n\n");
-    for(i = 0; i < argc; i++)
+    for(i = 0; i < argc; i++) /* Parse Command line arguments */
     {
-        if(strcmp(argv[i],"--channels") == 0 || strcmp(argv[i],"-c") == 0)
+        if(strcmp(argv[i],"--channels") == 0 || strcmp(argv[i],"-c") == 0) /* After channels there comes an array */
         {
             i++;
             j = 0;
@@ -122,7 +122,7 @@ int main(int argc, char *argv[])
             }
         }
     }
-    if(config.server == 0)
+    if(config.server == 0) /* If several config options were not given, print error and exit */
     {
         fprintf(stderr, "No server to download the data from has been defined. Pass an argument \"--server <server>\" to the program.\n");
         exit(ELEKTROL_NO_SERVER_ERROR);
@@ -258,8 +258,8 @@ int main(int argc, char *argv[])
     {
         if(channels[i] == NULL)
             break;
-        pid = fork();
-        if(pid == 0)
+        pid = fork(); /* Create child process */
+        if(pid == 0) /* Child process */
         {
             chdir(channels[i]);
             char *arguments[] = {"convert", "-delay", config.delay, "-loop", "0", "*.jpg", "anim.gif", NULL};
@@ -267,11 +267,11 @@ int main(int argc, char *argv[])
             fprintf(stderr, "Could not execute the convert command. Make sure convert is in a directory that is in your PATH.");
             _exit(8);
         }
-        if(pid > 0)
+        if(pid > 0) /* Parent process */
         {
             printf("Generation for GIF of channel %s has started\n", channels[i]);
         }
-        else
+        else /* Fork has failed */
         {
             fprintf(stderr, "Generation for GIF of channel %s could not be started, error while forking\n", channels[i]);
             success = ELEKTROL_FORK_ERROR;
@@ -279,7 +279,7 @@ int main(int argc, char *argv[])
     }
     for(i = 0; i < sizeof(channels)/sizeof(channels[0]); i++)
     {
-        wpid = wait(&status);
+        wpid = wait(&status); /* Wait for childs to terminate */
         if(wpid != -1)
         {
             printf("Child %i exited with state %i\n", wpid, status);
