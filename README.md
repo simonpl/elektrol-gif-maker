@@ -4,7 +4,7 @@ Elektrol-gif-maker README
 Copyright
 ---------
 
-Elektrol-gif-maker generates GIF-images produced by the russian satellite Elektro-l  
+Elektrol-gif-maker generates GIF-images produced by data sent down from the russian satellite Elektro-l  
 Copyright (C) 2013 Simon Plasger
 
 This program is free software: you can redistribute it and/or modify
