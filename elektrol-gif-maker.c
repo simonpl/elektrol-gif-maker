@@ -35,7 +35,7 @@
 
 int main(int argc, char *argv[])
 {
-    int i,j,pid, wpid, status, success;
+    int i,j,k,pid, wpid, status, success, servers;
     char temp[32]; /* Used at puzzling the path */
     success = EXIT_SUCCESS; /* Globally recognize if there is an error */
     char *poschannels[]= {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "RGB"}; /* This channels may be used */
@@ -63,6 +63,14 @@ int main(int argc, char *argv[])
             if(argv[i] != NULL);
             {
                 config.server = argv[i];
+            }
+        }
+        else if(strcmp(argv[i],"--server2") == 0 || strcmp(argv[i],"-s2") == 0)
+        {
+            i++;
+            if(argv[i] != NULL);
+            {
+                config.server2 = argv[i];
             }
         }
         else if(strcmp(argv[i],"--user") == 0 || strcmp(argv[i],"-u") == 0)
@@ -171,86 +179,96 @@ int main(int argc, char *argv[])
             mkdir(channels[i], 0755);
             chdir(channels[i]);
         }
-        for(j = 0; j < sizeof(timedirs)/sizeof(timedirs[0]); j++)
+        if(config.server2 == 0)
+            servers = 1;
+        else
+            servers = 2;
+        for(k = 0;k < servers;k++)
         {
-            path[0] = '\0';
-            strcat(path, "ftp://");
-            strcat(path, config.server);
-            strcat(path, "/");
-            sprintf(temp, "%i", config.time.tm_year + 1900);
-            strcat(path, temp);
-            switch(config.time.tm_mon)
+            for(j = 0; j < sizeof(timedirs)/sizeof(timedirs[0]); j++)
             {
-                case 0:
-                    strcat(path, "/January/");
-                    break;
-                case 1:
-                    strcat(path, "/February/");
-                    break;
-                case 2:
-                    strcat(path, "/March/");
-                    break;
-                case 3:
-                    strcat(path, "/April/");
-                    break;
-                case 4:
-                    strcat(path, "/May/");
-                    break;
-                case 5:
-                    strcat(path, "/June/");
-                    break;
-                case 6:
-                    strcat(path, "/July/");
-                    break;
-                case 7:
-                    strcat(path, "/August/");
-                    break;
-                case 8:
-                    strcat(path, "/September/");
-                    break;
-                case 9:
-                    strcat(path, "/October/");
-                    break;
-                case 10:
-                    strcat(path, "/November/");
-                    break;
-                case 11:
-                    strcat(path, "/December/");
-                    break;
+                path[0] = '\0';
+                strcat(path, "ftp://");
+                if(k == 0)
+                    strcat(path, config.server);
+                else
+                    strcat(path, config.server2);
+                strcat(path, "/");
+                sprintf(temp, "%i", config.time.tm_year + 1900);
+                strcat(path, temp);
+                switch(config.time.tm_mon)
+                {
+                    case 0:
+                        strcat(path, "/January/");
+                        break;
+                    case 1:
+                        strcat(path, "/February/");
+                        break;
+                    case 2:
+                        strcat(path, "/March/");
+                        break;
+                    case 3:
+                        strcat(path, "/April/");
+                        break;
+                    case 4:
+                        strcat(path, "/May/");
+                        break;
+                    case 5:
+                        strcat(path, "/June/");
+                        break;
+                    case 6:
+                        strcat(path, "/July/");
+                        break;
+                    case 7:
+                        strcat(path, "/August/");
+                        break;
+                    case 8:
+                        strcat(path, "/September/");
+                        break;
+                    case 9:
+                        strcat(path, "/October/");
+                        break;
+                    case 10:
+                        strcat(path, "/November/");
+                        break;
+                    case 11:
+                        strcat(path, "/December/");
+                        break;
+                }
+                if(config.time.tm_mday < 10)
+                {
+                    strcat(path, "0");
+                }
+                sprintf(temp, "%i", config.time.tm_mday);
+                strcat(path, temp);
+                strcat(path, "/");
+                strcat(path, timedirs[j]);
+                strcat(path, "/");
+                sprintf(temp, "%i", config.time.tm_year - 100);
+                strcat(path, temp);
+                if(config.time.tm_mon < 9)
+                {
+                    strcat(path, "0");
+                }
+                sprintf(temp, "%i", config.time.tm_mon + 1);;
+                strcat(path, temp);
+                if(config.time.tm_mday < 10)
+                {
+                    strcat(path, "0");
+                }
+                sprintf(temp, "%i", config.time.tm_mday);
+                strcat(path, temp);
+                strcat(path, "_");
+                strcat(path, timedirs[j]);
+                strcat(path, "_");
+                strcat(path, channels[i]);
+                strcat(path, ".jpg");
+                filename[0] = '\0';
+                strcat(filename, timedirs[j]);
+                strcat(filename, ".jpg");
+                load_image(path, filename, config, k);
+                curl_global_cleanup();   
             }
-            if(config.time.tm_mday < 10)
-            {
-                strcat(path, "0");
-            }
-            sprintf(temp, "%i", config.time.tm_mday);
-            strcat(path, temp);
-            strcat(path, "/");
-            strcat(path, timedirs[j]);
-            strcat(path, "/");
-            sprintf(temp, "%i", config.time.tm_year - 100);
-            strcat(path, temp);
-            if(config.time.tm_mon < 9)
-            {
-                strcat(path, "0");
-            }
-            sprintf(temp, "%i", config.time.tm_mon + 1);;
-            strcat(path, temp);
-            if(config.time.tm_mday < 10)
-            {
-                strcat(path, "0");
-            }
-            sprintf(temp, "%i", config.time.tm_mday);
-            strcat(path, temp);
-            strcat(path, "_");
-            strcat(path, timedirs[j]);
-            strcat(path, "_");
-            strcat(path, channels[i]);
-            strcat(path, ".jpg");
-            filename[0] = '\0';
-            strcat(filename, timedirs[j]);
-            strcat(filename, ".jpg");
-            load_image(path, filename, config);
-            curl_global_cleanup();   
         }
         chdir("..");
     }

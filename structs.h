@@ -6,6 +6,7 @@ struct curlfile /* Used by curl */
 struct elektrol_config /* Structure where the configuration will be stored */
 {
     char *server;
+    char *server2;
     char *user;
     char *passwd;
     char *delay;

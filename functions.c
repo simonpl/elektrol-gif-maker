@@ -16,7 +16,7 @@ int in_array(char *array[], int size, char *lookfor) /* Check if array has lookf
             return 1;
     return 0;
 }
-int load_image(char *path, char *filename, struct elektrol_config config) /* Load the requested image and store it at filename */
+int load_image(char *path, char *filename, struct elektrol_config config, int server) /* Load the requested image and store it at filename */
 {
     CURL *curl;
     CURLcode result;
@@ -29,8 +29,11 @@ int load_image(char *path, char *filename, struct elektrol_config config) /* Loa
     if(curl)
     {
         curl_easy_setopt(curl, CURLOPT_URL, path);
-        curl_easy_setopt(curl, CURLOPT_USERNAME, config.user);
-        curl_easy_setopt(curl, CURLOPT_PASSWORD, config.passwd);
+        if(server == 1)
+        {
+            curl_easy_setopt(curl, CURLOPT_USERNAME, config.user);
+            curl_easy_setopt(curl, CURLOPT_PASSWORD, config.passwd);
+        }
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &downfile);
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, my_fwrite);
         result = curl_easy_perform(curl);

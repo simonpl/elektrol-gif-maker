@@ -42,6 +42,8 @@ Usage
 
 `--password/-p <password>` defines the password that is used to log in via FTP.
 
+`--server2/-s2 <server>` defines an additional server where images may be stored. This is optional.
+
 `--delay/-d <delay>` defines the delay that is used between the images in the GIF-Animation.
 
 `--outputdir/-o <outputdir>` defines where the data will be saved.
@@ -52,7 +54,7 @@ Usage
 
 Example:
 
-`./elektrol-gif-maker --server ftp.ntsomz.ru --user electro --password electro --delay 0.1 --outputdir . --channels 1 2 5 RGB --year 2012 --month 5 --day 23`
+`./elektrol-gif-maker --server ftp.ntsomz.ru --user electro --password electro --server2  ftp1.rcpod.ru/ElectroL --delay 0.1 --outputdir . --channels 1 2 5 RGB --year 2012 --month 5 --day 23`
 
 Exit states
 -----------
