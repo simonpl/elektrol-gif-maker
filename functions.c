@@ -29,7 +29,7 @@ int load_image(char *path, char *filename, struct elektrol_config config, int se
     if(curl)
     {
         curl_easy_setopt(curl, CURLOPT_URL, path);
-        if(server == 1)
+        if(server == 0)
         {
             curl_easy_setopt(curl, CURLOPT_USERNAME, config.user);
             curl_easy_setopt(curl, CURLOPT_PASSWORD, config.passwd);
