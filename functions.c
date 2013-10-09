@@ -18,8 +18,10 @@ int in_array(char *array[], int size, char *lookfor) /* Check if array has lookf
 }
 int load_image(char *path, char *filename, struct elektrol_config config, int server) /* Load the requested image and store it at filename */
 {
+    int returnstate;
     CURL *curl;
     CURLcode result;
+    returnstate = 0;
     struct curlfile downfile=
     {
         filename,
@@ -41,9 +43,33 @@ int load_image(char *path, char *filename, struct elektrol_config config, int se
         if(CURLE_OK != result) 
         { 
             fprintf(stderr, "Could not load image located at %s, curl returned error state %d\n", path, result);
+            returnstate = 1;
         }
     }
     if(downfile.stream)
     fclose(downfile.stream); /* close the local file */
-    return 0;
+    return returnstate;
+}
+int check_black_image(char *filename)
+{
+    char command[200];
+    int exitstate;
+    command[0] = '\0';
+    strcat(command, "identify -verbose ");
+    strcat(command, filename);
+    strcat(command, " | grep -x \"  Colors: 1\" > /dev/null");
+    exitstate = system(command);
+    if (exitstate == -1)
+    {
+        exit(ELEKTROL_UNKOWN_ERROR);
+    }
+    else if(exitstate == 0)
+    {
+        remove(filename);
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
 }

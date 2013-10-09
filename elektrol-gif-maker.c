@@ -30,8 +30,8 @@
 #include <time.h>
 
 #include "structs.h"
-#include "functions.c"
 #include "constants.h"
+#include "functions.c"
 
 int main(int argc, char *argv[])
 {
@@ -266,7 +266,8 @@ int main(int argc, char *argv[])
                 filename[0] = '\0';
                 strcat(filename, timedirs[j]);
                 strcat(filename, ".jpg");
-                load_image(path, filename, config, k);
+                if(load_image(path, filename, config, k) == 0)
+                    check_black_image(filename);
                 curl_global_cleanup();   
             }
         }
