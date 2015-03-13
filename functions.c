@@ -63,7 +63,7 @@ int check_black_image(char *filename)
     {
         exit(ELEKTROL_UNKOWN_ERROR);
     }
-    else if(exitstate == 0)
+    else if(WEXITSTATUS(exitstate) == 0)
     {
         remove(filename);
         return 1;
